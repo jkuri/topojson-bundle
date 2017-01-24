@@ -1,6 +1,6 @@
 {
   "name": "topojson",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An extension to GeoJSON that encodes topology.",
   "keywords": [
     "topojson",
@@ -15,8 +15,8 @@
   "main": "dist/topojson.node.js",
   "browser": "dist/topojson.js",
   "typings": "typings/topojson.d.ts",
-  "module": "index",
-  "jsnext:main": "index",
+  "module": "dist/topojson.js",
+  "jsnext:main": "dist/topojson.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/topojson/topojson.git"
@@ -31,6 +31,7 @@
   "scripts": {
     "pretest": "rm -rf dist && mkdir dist && node rollup.node",
     "test": "tape 'test/**/*-test.js'",
+    "build": "rollup -c rollup.config.js",
     "prepublish": "npm run test && rollup -c --banner \"$(preamble)\" -f umd -n topojson -o dist/topojson.js -- index.js && uglifyjs --preamble \"$(preamble)\" dist/topojson.js -c negate_iife=false -m -o dist/topojson.min.js",
     "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp -v README.md LICENSE.md dist/topojson.js dist/topojson.min.js ../topojson-bower && cd ../topojson-bower && git add README.md LICENSE.md topojson.js topojson.min.js && git commit -m \"Release $VERSION.\" && git tag -am \"Release $VERSION.\" v${VERSION} && git push && git push --tags && cd - && cp dist/topojson.js ../d3.github.com/topojson.v2.js && cp dist/topojson.min.js ../d3.github.com/topojson.v2.min.js && cd ../d3.github.com && git add topojson.v2.js topojson.v2.min.js && git commit -m \"topojson ${VERSION}\" && git push && cd - && zip -j dist/topojson.zip -- LICENSE.md README.md dist/topojson.js dist/topojson.min.js"
   },
